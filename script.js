@@ -266,6 +266,197 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // WhatsApp Booking Functionality
+    const whatsappBookingBtn = document.getElementById('whatsappBooking');
+    
+    if (whatsappBookingBtn) {
+        whatsappBookingBtn.addEventListener('click', function() {
+            // Collect form data if available
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const problem = document.getElementById('problem').value.trim();
+            
+            // Create WhatsApp message
+            let message = "আসসালামু আলাইকুম ডাক্তার সাহেব।\n\nআমি একটি অ্যাপয়েন্টমেন্ট নিতে চাই।\n\n";
+            
+            if (name) {
+                message += `নাম: ${name}\n`;
+            }
+            if (phone) {
+                message += `মোবাইল: ${phone}\n`;
+            }
+            if (date) {
+                message += `তারিখ: ${date}\n`;
+            }
+            if (time) {
+                message += `সময়: ${time}\n`;
+            }
+            if (problem) {
+                message += `সমস্যা: ${problem}\n`;
+            }
+            
+            message += "\nঅনুগ্রহ করে আমার অ্যাপয়েন্টমেন্ট কনফার্ম করুন।\n\nধন্যবাদ।";
+            
+            // Encode message for URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Create WhatsApp URL
+            const whatsappUrl = `https://wa.me/8801748975226?text=${encodedMessage}`;
+            
+            // Open WhatsApp
+            window.open(whatsappUrl, '_blank');
+        });
+    }
+
+    // WhatsApp Emergency Contact Function
+    function sendEmergencyWhatsApp() {
+        const emergencyMessage = "আসসালামু আলাইকুম ডাক্তার সাহেব।\n\nআমার একটি জরুরি চিকিৎসা সমস্যা আছে। অনুগ্রহ করে দ্রুত যোগাযোগ করুন।\n\nধন্যবাদ।";
+        const encodedMessage = encodeURIComponent(emergencyMessage);
+        const whatsappUrl = `https://wa.me/8801748975226?text=${encodedMessage}`;
+        window.open(whatsappUrl, '_blank');
+    }
+
+    // Add emergency contact functionality to existing buttons
+    const emergencyWhatsappBtns = document.querySelectorAll('a[href*="জরুরি"]');
+    emergencyWhatsappBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            sendEmergencyWhatsApp();
+        });
+    });
+
+    // WhatsApp Share Functionality for Services
+    function shareServiceOnWhatsApp(serviceName) {
+        const message = `আমি ডাঃ মোঃ আসাদুজ্জামান লিটনের ${serviceName} সেবা সম্পর্কে জানতে চাই।\n\nঅনুগ্রহ করে বিস্তারিত তথ্য দিন।\n\nধন্যবাদ।`;
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/8801748975226?text=${encodedMessage}`;
+        window.open(whatsappUrl, '_blank');
+    }
+
+    // Add WhatsApp contact buttons to service cards
+    const serviceCards = document.querySelectorAll('.service-card');
+    serviceCards.forEach(card => {
+        const serviceName = card.querySelector('h3').textContent;
+        
+        // Create WhatsApp button for each service
+        const whatsappServiceBtn = document.createElement('button');
+        whatsappServiceBtn.className = 'btn btn-whatsapp service-whatsapp-btn';
+        whatsappServiceBtn.innerHTML = '<i class="fab fa-whatsapp"></i> WhatsApp এ জিজ্ঞাসা করুন';
+        whatsappServiceBtn.addEventListener('click', () => shareServiceOnWhatsApp(serviceName));
+        
+        card.appendChild(whatsappServiceBtn);
+    });
+
+    // WhatsApp Chat Widget Functionality
+    const whatsappWidget = document.getElementById('whatsappWidget');
+    const mainWhatsappBtn = document.getElementById('mainWhatsappBtn');
+    const closeChatWidget = document.getElementById('closeChatWidget');
+    const quickReplyBtns = document.querySelectorAll('.quick-reply-btn');
+    const chatInput = document.getElementById('chatInput');
+    const sendChatMessage = document.getElementById('sendChatMessage');
+
+    // Toggle chat widget
+    if (mainWhatsappBtn && whatsappWidget) {
+        mainWhatsappBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            whatsappWidget.classList.toggle('active');
+        });
+    }
+
+    // Close chat widget
+    if (closeChatWidget && whatsappWidget) {
+        closeChatWidget.addEventListener('click', function() {
+            whatsappWidget.classList.remove('active');
+        });
+    }
+
+    // Quick reply buttons
+    quickReplyBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const message = this.getAttribute('data-message');
+            sendWhatsAppMessage(message);
+        });
+    });
+
+    // Send message from input
+    function sendMessageFromInput() {
+        const message = chatInput.value.trim();
+        if (message) {
+            sendWhatsAppMessage(message);
+            chatInput.value = '';
+        }
+    }
+
+    // Send message on button click
+    if (sendChatMessage) {
+        sendChatMessage.addEventListener('click', sendMessageFromInput);
+    }
+
+    // Send message on Enter key
+    if (chatInput) {
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessageFromInput();
+            }
+        });
+    }
+
+    // Function to send WhatsApp message
+    function sendWhatsAppMessage(message) {
+        const fullMessage = `আসসালামু আলাইকুম ডাক্তার সাহেব।\n\n${message}\n\nঅনুগ্রহ করে সাহায্য করুন।\n\nধন্যবাদ।`;
+        const encodedMessage = encodeURIComponent(fullMessage);
+        const whatsappUrl = `https://wa.me/8801748975226?text=${encodedMessage}`;
+        window.open(whatsappUrl, '_blank');
+        
+        // Close the widget after sending
+        if (whatsappWidget) {
+            whatsappWidget.classList.remove('active');
+        }
+    }
+
+    // Close widget when clicking outside
+    document.addEventListener('click', function(e) {
+        if (whatsappWidget && !whatsappWidget.contains(e.target) && !mainWhatsappBtn.contains(e.target)) {
+            whatsappWidget.classList.remove('active');
+        }
+    });
+
+    // Update online status based on chamber hours
+    function updateOnlineStatus() {
+        const now = new Date();
+        const currentHour = now.getHours();
+        const currentMinute = now.getMinutes();
+        const currentTime = currentHour * 60 + currentMinute; // Convert to minutes for easier comparison
+        
+        // Chamber hours: 4:00 PM (16:00) to 8:00 PM (20:00)
+        const chamberStart = 16 * 60; // 4:00 PM in minutes
+        const chamberEnd = 20 * 60;   // 8:00 PM in minutes
+        
+        const onlineStatus = document.querySelector('.online-status');
+        const onlineIcon = onlineStatus?.querySelector('i');
+        const statusText = onlineStatus?.querySelector('span:last-child') || onlineStatus?.lastChild;
+        
+        if (onlineStatus) {
+            if (currentTime >= chamberStart && currentTime <= chamberEnd) {
+                // Online during chamber hours
+                if (onlineIcon) onlineIcon.style.color = '#4ade80';
+                if (statusText) statusText.textContent = ' অনলাইন';
+                onlineStatus.style.color = 'white';
+            } else {
+                // Offline outside chamber hours
+                if (onlineIcon) onlineIcon.style.color = '#ef4444';
+                if (statusText) statusText.textContent = ' অফলাইন';
+                onlineStatus.style.color = '#f1f5f9';
+            }
+        }
+    }
+
+    // Update status immediately and then every minute
+    updateOnlineStatus();
+    setInterval(updateOnlineStatus, 60000);
+
     // Close modal on close button click
     if (modalClose) {
         modalClose.addEventListener('click', function() {
