@@ -1206,6 +1206,25 @@ RESPONSIVE DESIGN
     
     .hero-text {
         text-align: center;
+        padding: 0 30px;
+    }
+    
+    .hero-text h1 {
+        font-size: 28px;
+    }
+    
+    .hero-text h2 {
+        font-size: 36px;
+    }
+    
+    .hero-buttons {
+        justify-content: center;
+        margin-top: 30px;
+    }
+    
+    .hero-image {
+        max-width: 350px;
+        margin: 0 auto;
     }
     
     .hero-image {
@@ -1266,20 +1285,55 @@ RESPONSIVE DESIGN
 
     .hero {
         padding-top: 120px;
+        min-height: auto;
+        padding-bottom: 60px;
     }
     
     .hero-content {
         text-align: center;
+        grid-template-columns: 1fr;
+        gap: 30px;
     }
 
     .hero-text {
         order: 2;
+        padding: 0 20px;
+    }
+    
+    .hero-text h1 {
+        font-size: 26px;
+        line-height: 1.3;
+        margin-bottom: 15px;
+    }
+    
+    .hero-text h2 {
+        font-size: 32px;
+        line-height: 1.2;
+        margin-bottom: 15px;
+    }
+    
+    .hero-text p {
+        font-size: 16px;
+        margin-bottom: 25px;
+        line-height: 1.6;
     }
 
     .hero-image {
         order: 1;
-        max-width: 300px;
+        max-width: 280px;
         margin: 0 auto;
+    }
+    
+    .hero-buttons {
+        justify-content: center;
+        margin-top: 20px;
+    }
+    
+    .hero-whatsapp {
+        padding: 15px 25px;
+        font-size: 16px;
+        border-radius: 50px;
+        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
     }
     
     .appointment-content,
@@ -1422,18 +1476,37 @@ RESPONSIVE DESIGN
     
     .hero {
         padding-top: 100px;
+        padding-bottom: 40px;
     }
 
     .hero-text h1 {
-        font-size: 22px;
+        font-size: 20px;
+        line-height: 1.3;
     }
 
     .hero-text h2 {
-        font-size: 28px;
+        font-size: 26px;
+        line-height: 1.2;
+    }
+    
+    .hero-text p {
+        font-size: 14px;
+        padding: 0 10px;
     }
 
     .hero-image {
-        max-width: 250px;
+        max-width: 220px;
+    }
+    
+    .hero-buttons {
+        padding: 0 20px;
+    }
+    
+    .hero-whatsapp {
+        padding: 12px 20px;
+        font-size: 14px;
+        width: 100%;
+        max-width: 280px;
     }
     
     .about-image {
@@ -1681,11 +1754,22 @@ RESPONSIVE DESIGN
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
+    margin-top: 25px;
 }
 
 .hero-whatsapp {
     background-color: #25d366;
     color: white;
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .hero-whatsapp:hover {
